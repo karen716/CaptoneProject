@@ -24,8 +24,8 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
     <script src="path/to/bootstrap.bundle.js"></script> <!-- Include Bootstrap JS bundle -->
 </head>
 <body>
-<header id="header" class="header fixed-top d-flex align-items-center" style="background-color: #57737A;">
-    <div class="d-flex align-items-center justify-content-between" style="background-color: #57737A;">
+<header id="header" class="header fixed-top d-flex align-items-center" style="background-color: #184965;">
+    <div class="d-flex align-items-center justify-content-between" style="background-color: #184965;">
         <a href="adminmain.php" class="logo d-flex align-items-center">
             <img src="crimelogo.png" alt="" style="border-radius: 50%;">
             <span class="d-none d-lg-block" style="color: #ffffff;">Crime</span>
@@ -83,47 +83,47 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
 
 </header><!-- End Header -->
 
-<aside id="sidebar" class="sidebar" style="background-color:#85BDBF;color: white;">
+<aside id="sidebar" class="sidebar" style="background-color:#72A0C1;color: white;">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="policemain.php" style="background-color:#85BDBF;color: white;">
+            <a class="nav-link collapsed" href="policemain.php" style="background-color:#72A0C1;color: white;">
                 <i class="bi bi-grid" style="color: white;"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="policereport.php" style="background-color:#85BDBF;color: white;">
+            <a class="nav-link collapsed" href="policereport.php" style="background-color:#72A0C1;color: white;">
                 <i class="bi bi-person-lines-fill" style="color: white;"></i>
                 <span>New Reports</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="police.php" style="background-color:#85BDBF;color: white;">
+            <a class="nav-link collapsed" href="police.php" style="background-color:#72A0C1;color: white;">
                 <i class="bi bi-people-fill" style="color: white;"></i>
                 <span>Police</span>
             </a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="oncase.php" style="background-color:#85BDBF;color: white;">
+            <a class="nav-link collapsed" href="oncase.php" style="background-color:#72A0C1;color: white;">
                 <i class="bi bi-card-list" style="color: white;"></i>
                 <span>On-Going</span>
             </a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="maps.php" style="background-color:#85BDBF;color: white;">
+            <a class="nav-link collapsed" href="maps.php" style="background-color:#72A0C1;color: white;">
                 <i class="bi bi-map" style="color: white;"></i>
                 <span>Map</span>
             </a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="reject1.php" style="background-color:#85BDBF;color: white;">
+            <a class="nav-link collapsed" href="reject1.php" style="background-color:#72A0C1;color: white;">
                 <i class="bi bi-map" style="color: white;"></i>
                 <span>Reject Reports</span>
             </a>
