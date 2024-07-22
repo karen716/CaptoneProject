@@ -48,7 +48,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg " style="background-color: #57737A;color: white;">
+  <nav class="navbar navbar-expand-lg " style="background-color: #184965;color: white;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#" style="color: white;"> <img src="crimelogo.png" style="border-radius:50%" width="30px">GuardianWatch</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,7 +102,7 @@
                                 <div class="invalid-feedback">Please enter your password!</div>
                             </div>
                             <div class="col-12 mb-3">
-                                <button class="btn btn-primary w-100" type="submit" style="background-color:#040F0F;">Login</button>
+                                <button class="btn btn-primary w-100" type="submit" style="background-color:#184965;">Login</button>
                             </div>
                             <div class="col-12 mb-3">
                                 <p class="small mb-0" style="color:#040F0F;">Don't have an account? <a href="pages-register.html">Create an account</a></p>
@@ -114,7 +114,7 @@
         </div>
     </div>
 <div class="card border-0">
-  <div class="card-body pt-3" style="background-color: #85BDBF;color: white;">
+  <div class="card-body pt-3" style="background-color: #184965;color: white;">
     <center><h2>Welcome ...</h2></center>
   </div>
 </div>
