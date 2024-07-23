@@ -28,7 +28,7 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
     <div class="d-flex align-items-center justify-content-between" style="background-color: #184965;">
         <a href="adminmain.php" class="logo d-flex align-items-center">
             <img src="crimelogo.png" alt="" style="border-radius: 50%;">
-            <span class="d-none d-lg-block" style="color: #ffffff;">Crime</span>
+            <span class="d-none d-lg-block" style="color: #ffffff;">GuardianWatch</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn" style="color: white;"></i>
     </div><!-- End Logo -->
@@ -44,7 +44,7 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
             </li>
 
             <li class="nav-item dropdown pe-3">
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" style = "color: #ffffff">
                     <img src="upload/<?php
                         $id = $_SESSION['id'];
                         $role = $_SESSION['role'];
@@ -83,49 +83,42 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
 
 </header><!-- End Header -->
 
-<aside id="sidebar" class="sidebar" style="background-color:#72A0C1;color: white;">
+<aside id="sidebar" class="sidebar" style="background-color:#add8e6;color: #184965;">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="policemain.php" style="background-color:#72A0C1;color: white;">
-                <i class="bi bi-grid" style="color: white;"></i>
+            <a class="nav-link collapsed" href="policemain.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi bi-grid" style="color: #184965 ;"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="policereport.php" style="background-color:#72A0C1;color: white;">
-                <i class="bi bi-person-lines-fill" style="color: white;"></i>
+            <a class="nav-link collapsed" href="policereport.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi bi-person-lines-fill" style="color: #184965;"></i>
                 <span>New Reports</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="police.php" style="background-color:#72A0C1;color: white;">
-                <i class="bi bi-people-fill" style="color: white;"></i>
+            <a class="nav-link collapsed" href="police.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi bi-people-fill" style="color: #184965;"></i>
                 <span>Police</span>
             </a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="oncase.php" style="background-color:#72A0C1;color: white;">
-                <i class="bi bi-card-list" style="color: white;"></i>
+            <a class="nav-link collapsed" href="oncase.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi bi-card-list" style="color: #184965;"></i>
                 <span>On-Going</span>
             </a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="maps.php" style="background-color:#72A0C1;color: white;">
-                <i class="bi bi-map" style="color: white;"></i>
+            <a class="nav-link collapsed" href="maps.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi bi-map" style="color: #184965;"></i>
                 <span>Map</span>
-            </a>
-        </li>
-        
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="reject1.php" style="background-color:#72A0C1;color: white;">
-                <i class="bi bi-map" style="color: white;"></i>
-                <span>Reject Reports</span>
             </a>
         </li>
 
