@@ -1,6 +1,8 @@
 
 # Guardian Watch: A Comprehensive Crime Reporting System with Document Management Integration Designed for Nasugbu MPS
 
+##Capstone Adviser: Asst. Prof REnza Mervin A. Salac
+
 ## Members
 
 - Karen G. Hernandez
