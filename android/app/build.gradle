@@ -1,0 +1,133 @@
+apply plugin: "com.android.application"
+
+import com.android.build.OutputFile
+
+project.ext.react = [
+    enableHermes: false,  // Whether to enable Hermes (https://facebook.github.io/react-native/docs/hermes)
+]
+
+apply from: "../../node_modules/react-native/react.gradle"
+
+/**
+ * Set this to true to create two separate APKs instead of one:
+ *   - An APK that only works on ARM devices
+ *   - An APK that only works on x86 devices
+ * The advantage is the size of the APK is reduced by about 4MB.
+ * Upload all the APKs to the Play Store and people will download
+ * the correct one based on the CPU architecture of their device.
+ */
+def enableSeparateBuildPerCPUArchitecture = false
+
+/**
+ * Run Proguard to shrink the Java bytecode in release builds.
+ */
+def enableProguardInReleaseBuilds = false
+
+/**
+ * The preferred build flavor of JavaScriptCore.
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variants include ICU i18n library and are
+ * approx 6MB larger in APK size.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+/**
+ * Whether to enable the Hermes VM.
+ *
+ * This should be set on project.ext.react and mirrored here.  If it is not set on
+ * project.ext.react, Hermes will not be enabled as it will be stripped out by
+ * react-native's Metro Bundler when it bundles the app.
+ */
+def enableHermes = project.ext.react.get("enableHermes", false);
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.yourapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    // For installing with adb:
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                outputFileName = "${applicationId}-${output.baseName}-${variant.versionName}.apk"
+            }
+        }
+    }
+
+    packagingOptions {
+        pickFirst "**"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
+    }
+
+    if (enableHermes) {
+        def hermesPath = "../../node_modules/hermes-engine/android/";
+        debugImplementation files(hermesPath + "hermes-debug.aar")
+        releaseImplementation files(hermesPath + "hermes-release.aar")
+    } else {
+        implementation jscFlavor
+    }
+
+    // More configurations as needed...
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    // Add your other dependencies here...
+}
+
+// Apply from project  level gradle.properties
+project.ext.envConfigFile = rootProject.file("gradle.properties")
+apply from: rootProject.file("gradle.properties")
+apply from: project(':react-native-voice/voice').projectDir.getPath() + "/build.gradle"
+`` ? The Import Automatically
