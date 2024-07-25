@@ -44,7 +44,7 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
             </li>
 
             <li class="nav-item dropdown pe-3">
-                <a  class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" style = "color:#ffffff">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" style="color:#ffffff">
                     <img src="upload/<?php
                         $id = $_SESSION['id'];
                         $role = $_SESSION['role'];
@@ -60,9 +60,7 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6><?php
-                            echo $row['fullname'];
-                        ?></h6>
+                        <h6><?php echo $row['fullname']; ?></h6>
                         <span><?php echo ucfirst($role); ?></span>
                     </li>
                     <li>
@@ -124,7 +122,7 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
         
         <li class="nav-item">
             <a class="nav-link collapsed" href="reject.php" style="background-color:#add8e6;color: #184965;">
-            <i class="bi bi-x-circle" style="color: #184965;"></i>
+                <i class="bi bi-x-circle" style="color: #184965;"></i>
                 <span>Reject Reports</span>
             </a>
         </li>
@@ -156,6 +154,9 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
         </div>
     </div>
 </div>
+
+<!-- Footer -->
+
 
 </body>
 </html>

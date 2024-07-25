@@ -59,7 +59,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
-    <?php include "nav1.php"; ?>
+    <?php include "nav3.php"; ?>
 
     <main id="main" class="main">
         <div class="pagetitle">

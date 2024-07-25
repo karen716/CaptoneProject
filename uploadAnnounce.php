@@ -75,17 +75,7 @@ if (isset($_FILES['files'])) {
     }
 }
 
-// Update the reports table
-$updateStmt = $conn->prepare("UPDATE reports SET finish = 'Ongoing' WHERE id = ?");
-$updateStmt->bind_param("i", $id);
-if ($updateStmt->execute()) {
-    echo "Report status updated to 'Ongoing'.";
-} else {
-    echo "Error updating report status: " . $updateStmt->error;
-}
-$updateStmt->close();
-
 // Redirect or output success message
-header("Location: policereport.php"); // Replace with your success page or redirection URL
+header("Location: announce.php"); // Replace with your success page or redirection URL
 exit();
 ?>

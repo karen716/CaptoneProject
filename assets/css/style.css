@@ -58,6 +58,7 @@ h6 {
 --------------------------------------------------------------*/
 .pagetitle {
   margin-bottom: 10px;
+  margin-top: -60px;
 }
 
 .pagetitle h1 {
@@ -218,10 +219,9 @@ h6 {
 
 /* Card */
 .card {
-  margin-bottom: 30px;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-header,
@@ -801,6 +801,7 @@ h6 {
 /* Info Cards */
 .dashboard .info-card {
   padding-bottom: 10px;
+  background-color: #e0f7fa;
 }
 
 .dashboard .info-card h6 {
@@ -822,7 +823,7 @@ h6 {
 
 .dashboard .sales-card .card-icon {
   color: #4154f1;
-  background: #f6f6fe;
+  background-color: #b2ebf2;
 }
 
 .dashboard .revenue-card .card-icon {

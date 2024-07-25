@@ -81,26 +81,26 @@
 
   </header><!-- End Header -->
 
-  <aside id="sidebar" class="sidebar" style="background-color:#85BDBF;color: white;">
+  <aside id="sidebar" class="sidebar" style="background-color:#add8e6;color: white;">
 
     <ul class="sidebar-nav" id="sidebar-nav" >
 
       <li class="nav-item" >
-        <a class="nav-link collapsed" href="usermain.php" style="background-color:#85BDBF;color: white;">
+        <a class="nav-link collapsed" href="usermain.php" style="background-color:#add8e6;color: white;">
           <i class="bi bi-grid" style="color: white;"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
      
       <li class="nav-item">
-        <a class="nav-link collapsed" href="" style="background-color:#85BDBF;color: white;">
+        <a class="nav-link collapsed" href="" style="background-color:#add8e6;color: white;">
              <i class="bi bi-person-lines-fill" style="color: white;"></i>
           <span>Reports</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="" style="background-color:#85BDBF;color: white;">
+        <a class="nav-link collapsed" href="" style="background-color:#add8e6;color: white;">
                       <i class="bi bi-people-fill" style="color: white;"></i>
 
           <span>On-Going</span>
@@ -110,19 +110,19 @@
      
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="" style="background-color:#85BDBF;color: white;">
+        <a class="nav-link collapsed" href="" style="background-color:#add8e6;color: white;">
             <i class="bi bi-card-list" style="color: white;"></i>
           <span>Completed</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="" style="background-color:#85BDBF;color: white;">
+        <a class="nav-link collapsed" href="" style="background-color:#add8e6;color: white;">
           <i class="bi bi-map" style="color: white;"></i>
           <span>Map</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="" style="background-color:#85BDBF;color: white;">
+        <a class="nav-link collapsed" href="" style="background-color:#add8e6;color: white;">
           <i class="bi bi-map" style="color: white;"></i>
           <span>Notification</span>
         </a>

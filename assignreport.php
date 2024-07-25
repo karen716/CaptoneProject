@@ -8,7 +8,7 @@ $id = $_POST['id'];
 
 
 
-$sql = "UPDATE reports SET police_assign='$re',finish='On' WHERE id = '$id'";
+$sql = "UPDATE reports SET police_assign='$re',finish='Unsettled' WHERE id = '$id'";
  if(mysqli_query($conn,$sql)){
  $error_message = "You Successfully asign police";
  	 		$color = "p";   

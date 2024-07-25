@@ -21,7 +21,7 @@
 
     .loader {
       border: 10px solid #f3f3f3;
-      border-top: 8px solid #184965;
+      border-top: 8px solid #da649c;
       border-radius: 50%;
       width: 150px;
       height: 150px;
@@ -38,7 +38,7 @@
       font: arial;
       font-weight: bold;
       font-size: 30px;
-      color:  #184965;
+      color:  #da649c;
       text-align: center;
     }
   </style>
