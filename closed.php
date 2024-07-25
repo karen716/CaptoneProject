@@ -198,7 +198,7 @@ INNER JOIN
 ON 
     r.user_id = u.id
 WHERE
-    r.police_assign = $policeAssign and r.finish ='Unsettled'";
+    r.police_assign = $policeAssign and r.finish ='Closed'";
                       $result = mysqli_query($conn, $sql);
                       while ($row = mysqli_fetch_array($result)) {
                         echo "<tr>";
@@ -207,40 +207,17 @@ WHERE
                         echo "<td>".$row['category']."</td>";
                         echo "<td>".$row['description']."</td>";
                         echo "<td>".$row['file_date']."</td>";
-
                         echo "<td>
-                        <button class='btn btn-sm btn-primary' onclick='callmodal1(\"".$row['id']."\", \"".$row['user_id']."\", \"".$row['name']."\", \"".$row['category']."\", \"".$row['description']."\", \"".$row['file_date']."\")'>Update</button> 
-                        </td>";
-
-
-
-
-                   
-
-                        
-                     
-                      
-
-              
-                      
-
-
-
-                        
-                       
-
-                        // para sa edit
-                       
-                        // para sa delete
-                       
-                     
-                      
-                      
-
-
+                                <button class='btn btn-sm btn-primary remove-btn' 
+                                        data-id='".$row['id']."' 
+                                        data-username='".$row['username']."' 
+                                        data-name='".$row['name']."' 
+                                        data-category='".$row['category']."' 
+                                        data-description='".$row['description']."' 
+                                        data-file_date='".$row['file_date']."'>Remove</button>
+                              </td>";
                         echo "</tr>";
-
-                      }
+                    }
                       ?>
                     
                       
@@ -280,6 +257,24 @@ WHERE
   <script src="assets/js/main.js"></script>
 
 </body>
+
+<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeModalLabel">Confirm Removal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to remove this report?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmRemove">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class='modal fade' id="asign" tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
     <div class='modal-dialog'>
@@ -479,4 +474,41 @@ WHERE
     console.error('WebSocket error: ', error);
   };
   </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const removeButtons = document.querySelectorAll('.remove-btn');
+    const removeModal = new bootstrap.Modal(document.getElementById('removeModal'));
+    let reportIdToRemove = null;
+
+    removeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            reportIdToRemove = button.getAttribute('data-id');
+            removeModal.show();
+        });
+    });
+
+    document.getElementById('confirmRemove').addEventListener('click', () => {
+        if (reportIdToRemove) {
+            fetch('remove_report.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: reportIdToRemove })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Reload the page to reflect the changes
+                } else {
+                    alert('Failed to remove report.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+});
+</script>
+
   </html>

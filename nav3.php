@@ -100,13 +100,6 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
                 <span>New Reports</span>
             </a>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="police.php" style="background-color:#add8e6;color: #184965;">
-                <i class="bi bi-people-fill" style="color: #184965;"></i>
-                <span>Police</span>
-            </a>
-        </li>
         
         <li class="nav-item">
             <a class="nav-link collapsed" href="oncase.php" style="background-color:#add8e6;color: #184965;">
@@ -114,11 +107,30 @@ $result_notifications = mysqli_query($conn, $sql_notifications);
                 <span>On-Going</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="closed.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi bi-card-list" style="color: #184965;"></i>
+                <span>Solved Cases</span>
+            </a>
+        </li>
         
         <li class="nav-item">
-            <a class="nav-link collapsed" href="maps.php" style="background-color:#add8e6;color: #184965;">
+            <a class="nav-link collapsed" href="mapsPolice.php" style="background-color:#add8e6;color: #184965;">
                 <i class="bi bi-map" style="color: #184965;"></i>
                 <span>Map</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="announce.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi-megaphone" style="color: #184965;"></i>
+                <span>Announcements</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="documents.php" style="background-color:#add8e6;color: #184965;">
+                <i class="bi-file-earmark" style="color: #184965;"></i>
+                <span>Documents</span>
             </a>
         </li>
 

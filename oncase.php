@@ -49,7 +49,7 @@ if (!isset($_SESSION['role']) || (trim($_SESSION['role']) == '')) {
 
 <body>
   <?php
-    include "nav1.php";
+    include "nav3.php";
   ?>
 
   <main id="main" class="main">
@@ -92,7 +92,7 @@ if (!isset($_SESSION['role']) || (trim($_SESSION['role']) == '')) {
                 </tr>
               </thead>
               <tbody>
-                <?php
+              <?php
                   $sql = "SELECT r.id, r.name, r.witness, u.fullname AS User, p.fullname AS Police, r.category, r.description, r.file_date, r.finish 
                           FROM reports AS r 
                           INNER JOIN police AS p ON r.police_assign = p.id 
@@ -108,7 +108,7 @@ if (!isset($_SESSION['role']) || (trim($_SESSION['role']) == '')) {
                     echo "<td>".$row['witness']."</td>";
                     echo "<td>".$row['file_date']."</td>";
                     echo "<td>".$row['Police']."</td>";
-                    echo "<td><button class='btn btn-sm btn-primary'>View</button></td>";
+                    echo "<td><button class='btn btn-sm btn-primary view-btn' data-id='".$row['id']."' data-user='".$row['User']."' data-name='".$row['name']."' data-category='".$row['category']."' data-description='".$row['description']."' data-witness='".$row['witness']."' data-file_date='".$row['file_date']."' data-police='".$row['Police']."'>View</button></td>";
                     echo "</tr>";
                   }
                 ?>
@@ -124,22 +124,27 @@ if (!isset($_SESSION['role']) || (trim($_SESSION['role']) == '')) {
   <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header" id="modalheader">
-          <h5 class="modal-title" id="idtitle">Details</h5>
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p style="font-size: 20px;" id="modalDate"></p>
-          <p style="text-align: center;font-size: 20px;">Are you sure you want to <span id="modalAction"></span> Mr/Ms. <span id="modalName"></span> ? </p>
-          <center><button id="btnbtn1" class="btn btn-primary" style="display: none;">Accept</button></center>
-          <center><button id="btnbtn2" class="btn btn-danger" style="display: none;">Decline</button></center>
-          <input type="hidden" value="" id="idd">
+          <p><strong>User Reported:</strong> <span id="modalUser"></span></p>
+          <p><strong>Victim Name:</strong> <span id="modalName"></span></p>
+          <p><strong>Case:</strong> <span id="modalCategory"></span></p>
+          <p><strong>Details:</strong> <span id="modalDescription"></span></p>
+          <p><strong>Witness Name:</strong> <span id="modalWitness"></span></p>
+          <p><strong>File Date:</strong> <span id="modalFileDate"></span></p>
+          <p><strong>Police Assign:</strong> <span id="modalPolice"></span></p>
+          <button id="caseClosedBtn" class="btn btn-danger mt-3">Close Case</button>
+          <input type="hidden" id="reportId">
         </div>
       </div>
     </div>
   </div>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -153,6 +158,62 @@ if (!isset($_SESSION['role']) || (trim($_SESSION['role']) == '')) {
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // Event listener for view buttons
+      document.querySelectorAll('.view-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          const user = this.getAttribute('data-user');
+          const name = this.getAttribute('data-name');
+          const category = this.getAttribute('data-category');
+          const description = this.getAttribute('data-description');
+          const witness = this.getAttribute('data-witness');
+          const fileDate = this.getAttribute('data-file_date');
+          const police = this.getAttribute('data-police');
+
+          document.getElementById('modalUser').textContent = user;
+          document.getElementById('modalName').textContent = name;
+          document.getElementById('modalCategory').textContent = category;
+          document.getElementById('modalDescription').textContent = description;
+          document.getElementById('modalWitness').textContent = witness;
+          document.getElementById('modalFileDate').textContent = fileDate;
+          document.getElementById('modalPolice').textContent = police;
+          document.getElementById('reportId').value = id;
+
+          // Show modal
+          var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+          myModal.show();
+        });
+      });
+
+      // Event listener for Case Closed button
+      document.getElementById('caseClosedBtn').addEventListener('click', function() {
+        const reportId = document.getElementById('reportId').value;
+
+        // AJAX request to update the finish column
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'close_case.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              alert('Case closed successfully');
+              location.reload();
+            } else {
+              alert('Failed to close the case');
+            }
+          }
+        };
+        xhr.send('id=' + reportId);
+      });
+    });
+  </script>
+
+
+
+
 </body>
 
 </html>

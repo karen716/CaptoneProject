@@ -1,10 +1,46 @@
-<?php 
- session_start();
- include "dbcon.php";
- if (!isset($_SESSION['role']) || (trim($_SESSION['role']) == '')) {
-   header('location:index.php');
-   exit();
- }
+<?php
+session_start();
+include "dbcon.php";
+
+if (!isset($_SESSION['role']) || (trim($_SESSION['role']) == '')) {
+    header('location:index.php');
+    exit();
+}
+
+// Query to count reports where finish is 'Unsettled'
+$sql = "SELECT COUNT(*) AS count FROM reports WHERE finish = 'Unsettled'";
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $count = $row['count'];
+} else {
+    $count = 0;
+}
+
+// Query to count all available police
+$sql_police = "SELECT COUNT(*) AS police_count FROM police where status = 'Available'";
+$result_police = mysqli_query($conn, $sql_police);
+
+if ($result_police) {
+    $row_police = mysqli_fetch_assoc($result_police);
+    $police_count = $row_police['police_count'];
+} else {
+    $police_count = 0;
+}
+
+// Query to count ongoing cases
+$sql_cases = "SELECT COUNT(*) AS ongoing_count FROM reports WHERE finish = 'Ongoing'";
+$result_cases = mysqli_query($conn, $sql_cases);
+
+if ($result_cases) {
+    $row_cases = mysqli_fetch_assoc($result_cases);
+    $ongoing_count = $row_cases['ongoing_count'];
+} else {
+    $ongoing_count = 0;
+}
+
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +118,11 @@
       width: 100% !important;
       height: 400px;
     }
+    #lineChart {
+      width: 102% !important;
+      height: 210px;
+      margin-left: 13px;
+    }
   </style>
 </head>
 
@@ -99,94 +140,62 @@
     <section class="section dashboard">
       <div class="container">
         <div class="row">
-     <div class="col-xxl-3 col-md-6">
-      <a href="policereport.php">
-      <div class="card info-card customers-card">
-         <div class="card-body">
+          <!-- New Reports Card -->
+          <div class="col-xxl-3 col-md-6">
+            <a href="policereport.php">
+              <div class="card info-card customers-card">
+                <div class="card-body">
                   <h5 class="card-title">New Reports</h5>
-
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-person-lines-fill"></i>
+                      <i class="bi bi-person-lines-fill"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1</h6>
-
+                      <h6><?php echo $count; ?></h6>
                     </div>
                   </div>
                 </div>
-      </div>
-    </a>
-    </div>
+              </div>
+            </a>
+          </div>
     <!-- Sales Card -->
-    <div class="col-xxl-3 col-md-6">
-      <a href="police.php">
-      <div class="card info-card sales-card">
-       <div class="card-body">
-                  <h5 class="card-title">Available Police</h5>
 
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-people-fill"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>2</h6>
-
-                    </div>
-                  </div>
-                </div>
-      </div>
-    </a>
-    </div>
-
-    <!-- Revenue Card -->
-    <div class="col-xxl-3 col-md-6">
-      <a href="policecase.php">
-      <div class="card info-card sales-card">
-
-         <div class="card-body">
-                  <h5 class="card-title">On going Case </h5>
-
+          <!-- Ongoing Cases Card -->
+          <div class="col-xxl-3 col-md-6">
+            <a href="oncase.php">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">Ongoing Cases</h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-houses"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>3</h6>
-
+                      <h6><?php echo $ongoing_count; ?></h6>
                     </div>
                   </div>
                 </div>
-      </div>
-    </a>
-    </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-xxl-6 col-md-6">
+
+          <canvas id="barChart" style="height: 50px; width:-7%; border-radius: 5px; box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);"></canvas>
+                
+                    </div>
 
     <!-- Customers Card 1 -->
-    <div class="col-xxl-3 col-md-6">
-        <a href="complainss.php">
-      <div class="card info-card customers-card">
-         <div class="card-body">
-                  <h5 class="card-title">Complaints</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-card-list"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>4</h6>
-                    
-
-                    </div>
-                  </div>
-                </div>
-      </div>
-        </a>
-    </div>
 
     <div class="row">
-            <div class="col-12">
-              <div id="map" style="height: 445px; width:102%; margin-top: -20px;border-radius: 5px; box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);"></div>
+            <div class="col-6">
+              <div id="map" style="height: 420px; width:102%; margin-top: -100px;border-radius: 5px; box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);"></div>
             </div>
+
+            <div class="col-6">
+              <canvas id="lineChart" style="height: 315px; width: 50%;border-radius: 5px; margin-top: 19px; box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);"></canvas>
+            </div>
+            
           </div>
    
   </div>
@@ -219,6 +228,102 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+  const alertSound = document.getElementById('alertSound');
+  document.addEventListener('DOMContentLoaded', (event) => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  });
+
+  function showEmergencyAlert(location) {
+    // Show the modal
+    const modal = document.getElementById('emergencyAlertModal');
+    const modalLocation = document.getElementById('emergencyLocation');
+    modalLocation.textContent = `Emergency Alert: ${location}`;
+    modal.style.display = 'block';
+
+    // Function to play alert sound with volume set to 70%
+    function playAlertSound() {
+      alertSound.volume = 0.1; // Set volume to 70% (0.7 is 70% of max volume)
+      alertSound.play();
+    }
+
+    // Play alert sound when showing the modal
+    playAlertSound();
+
+    // Text-to-speech function
+    function speakText(text) {
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.1; // Normal speech rate (default is 1)
+    utterance.pitch = 1.5; // Higher pitch (default is 1)
+    utterance.volume = 5; // Max volume (default is 1)
+        window.speechSynthesis.speak(utterance);
+      } else {
+        console.error('Speech Synthesis not supported in this browser.');
+      }
+    }
+
+    // Speak the alert message
+    speakText(`Emergency Alert: ${location}`);
+
+    // Close the modal when the user clicks on the close button (×)
+    const closeButton = document.getElementsByClassName('close1')[0];
+  closeButton.onclick = function() {
+    modal.style.display = 'none';
+    alertSound.pause(); // Stop the alert sound
+    alertSound.currentTime = 0; // Reset playback position to start
+    window.speechSynthesis.cancel(); // Cancel ongoing speech synthesis
+  };
+
+    // Close the modal if the user clicks anywhere outside of the modal content
+    window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      alertSound.pause(); // Stop the alert sound
+      alertSound.currentTime = 0; // Reset playback position to start
+      window.speechSynthesis.cancel(); // Cancel ongoing speech synthesis
+    }
+  };
+
+    // Show browser notification
+    if (Notification.permission === "granted") {
+      const notification = new Notification('Emergency Alert!', {
+        body: `Emergency Alert: ${location}`,
+        icon: './img/logo.png' // Path to an icon image
+      });
+
+      notification.onclick = function() {
+        window.focus();
+        modal.style.display = 'block'; // Ensure modal is visible if clicked
+      };
+    }
+  }
+
+  // WebSocket setup
+  const ws = new WebSocket('ws://localhost:8080');
+
+  ws.onopen = () => {
+    console.log('WebSocket connection established');
+  };
+
+  ws.onmessage = (message) => {
+    const data = JSON.parse(message.data);
+
+    if (data.type === 'emergencyAlert') {
+      showEmergencyAlert(data.data.combinedLocation);
+    }
+  };
+
+  ws.onclose = () => {
+    console.log('WebSocket connection closed');
+  };
+
+  ws.onerror = (error) => {
+    console.error('WebSocket error: ', error);
+  };
+  </script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const map = L.map('map').setView([51.505, -0.09], 13);
@@ -294,37 +399,119 @@
         circle.bindPopup(`Location: ${data.location}<br>Crime Rate: ${data.crimeRate}`);
       });
 
-      const alertSound = document.getElementById('alertSound');
-      const emergencyAlertModal = document.getElementById('emergencyAlertModal');
-      const emergencyLocation = document.getElementById('emergencyLocation');
-      const closeModal = document.getElementsByClassName('close1')[0];
-
-      const ws = new WebSocket('ws://localhost:8080');
-      ws.onmessage = (event) => {
-        const alertData = JSON.parse(event.data);
-        const { location, description } = alertData;
-
-        alertSound.play();
-        emergencyLocation.textContent = `Location: ${location}`;
-        emergencyAlertModal.style.display = 'block';
-
-        // Optionally, center the map on the alert location and add a marker
-        map.setView([alertData.lat, alertData.lng], 15);
-        L.marker([alertData.lat, alertData.lng]).addTo(map)
-          .bindPopup(`Emergency at ${location}: ${description}`)
-          .openPopup();
+      const lineChartData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Number of Reports',
+          data: [65, 59, 80, 81, 56, 55, 40],
+          borderColor: '#184965',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: true,
+          tension: 0.1
+        }]
       };
 
-      closeModal.onclick = () => {
-        emergencyAlertModal.style.display = 'none';
-      };
-
-      window.onclick = (event) => {
-        if (event.target === emergencyAlertModal) {
-          emergencyAlertModal.style.display = 'none';
+      new Chart(document.getElementById('lineChart').getContext('2d'), {
+        type: 'line',
+        data: lineChartData,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Monthly Number of Reports',
+              font: {
+                size: 16
+              },
+              color: '#333'
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true
+            },
+            y: {
+              beginAtZero: true
+            }
+          }
         }
-      };
+      });
     });
+
+    const locations = ['Robbery', 'Assault', 'Burglary', 'Vandalism', 'Theft'];
+    const categories = ['Banilad', 'Bucana', 'Aga', 'Barangay 1', 'Barangay 2'];
+
+    // Example data structure: total reports per category per location
+    const data = {
+      'Robbery': [10, 20, 30, 15, 25],
+      'Assault': [20, 30, 25, 10, 20],
+      'Burglary': [15, 25, 30, 20, 35],
+      'Vandalism': [30, 15, 20, 25, 10],
+      'Theft': [25, 35, 20, 30, 15]
+    };
+
+    // Define a set of darker appealing colors
+    const colors = [
+  'rgba(135, 206, 250, 0.8)',  // Light Sky Blue
+  'rgba(70, 130, 180, 0.8)',   // Steel Blue
+  'rgba(0, 77, 153, 0.8)',    // Dark Steel Blue
+  'rgba(0, 0, 139, 0.8)',      // Dark Blue
+  'rgba(25, 25, 112, 0.8)'     // Midnight Blue
+];
+
+const borderColors = [
+  'rgba(135, 206, 250, 1)',  // Light Sky Blue
+  'rgba(70, 130, 180, 1)',   // Steel Blue
+  'rgba(0, 77, 153, 0.8)',    // Dark Steel Blue
+  'rgba(0, 0, 139, 1)',      // Dark Blue
+  'rgba(25, 25, 112, 1)'     // Midnight Blue
+];
+
+    // Prepare datasets for each location with updated colors
+    const datasets = locations.map((location, index) => ({
+      label: location,
+      data: data[location],
+      backgroundColor: colors[index],
+      borderColor: borderColors[index],
+      borderWidth: 1
+    }));
+
+    // Initialize the horizontal bar chart with updated colors
+    new Chart(document.getElementById('barChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: datasets
+      },
+      options: {
+        indexAxis: 'y', // This makes the bars horizontal
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          title: {
+            display: true,
+            text: 'Total Reported Crimes by Category and Location',
+            font: {
+                size: 16
+              },
+              color: '#333'
+          }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            beginAtZero: true
+          },
+          y: {
+            stacked: true
+          }
+        }
+      }
+    });
+
   </script>
+
 </body>
 </html>

@@ -133,7 +133,7 @@
   <audio id="alertSound" src="alert.mp3" preload="auto"></audio>
 
     <div class="pagetitle">
-      <h1>New Report</h1>
+      <h1>Document Management</h1>
 
       <nav>
        
@@ -171,9 +171,10 @@
                     <thead>
                       <tr>
                         <th scope="col">User Reported</th>
+                        <th scope="col">Case No.</th>
                         <th scope="col">Victim Name</th>
-                        <th scope="col">Case</th>
                         <th scope="col">Details</th>
+                        <th scope="col">Evidence file</th>
                         <th scope="col">File Date</th>
                         <th scope="col">Action</th>
 
@@ -187,6 +188,7 @@
                       $sql = "SELECT r.id, u.fullname AS username, r.name,
     r.category,
     r.description,
+    r.evidence,
     DATE_FORMAT(r.file_date, '%b-%d-%Y') AS file_date,
     r.finish,
     r.police_assign,
@@ -198,18 +200,19 @@ INNER JOIN
 ON 
     r.user_id = u.id
 WHERE
-    r.police_assign = $policeAssign and r.finish ='Unsettled'";
+    r.police_assign = $policeAssign";
                       $result = mysqli_query($conn, $sql);
                       while ($row = mysqli_fetch_array($result)) {
                         echo "<tr>";
                         echo "<td>".$row['username']."</td>";
+                        echo "<td>".$row['id']."</td>";
                         echo "<td>".$row['name']."</td>";
-                        echo "<td>".$row['category']."</td>";
                         echo "<td>".$row['description']."</td>";
+                        echo "<td>".$row['evidence']."</td>";
                         echo "<td>".$row['file_date']."</td>";
 
                         echo "<td>
-                        <button class='btn btn-sm btn-primary' onclick='callmodal1(\"".$row['id']."\", \"".$row['user_id']."\", \"".$row['name']."\", \"".$row['category']."\", \"".$row['description']."\", \"".$row['file_date']."\")'>Update</button> 
+                        <button class='btn btn-sm btn-primary' onclick='viewFiles(\"".$row['id']."\", \"".$row['user_id']."\", \"".$row['name']."\", \"".$row['category']."\", \"".$row['description']."\", \"".$row['file_date']."\")'>Manage File</button> 
                         </td>";
 
 
@@ -319,6 +322,24 @@ WHERE
         </div>
     </div>
 </div>
+<div class='modal fade' id='viewFilesModal' tabindex='-1' aria-labelledby='viewFilesModalLabel' aria-hidden='true'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header bg-primary text-white'>
+                <h1 class='modal-title fs-5' id='viewFilesModalLabel'>View Evidence Files</h1>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-body'>
+                <div id='filesContainer'>
+                    <!-- Files will be injected here -->
+                </div>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     let fileArray = [];
@@ -377,15 +398,50 @@ WHERE
   
   
   function callmodal1(id, user_id, name, category, description, file_date) {
+    // Set hidden input values
     document.getElementById("arrid1").value = id;
     document.getElementById('userId').value = user_id;
     document.getElementById('name').value = name;
     document.getElementById('category').value = category;
     document.getElementById('description').value = description;
     document.getElementById('file_date').value = file_date;
-    console.log("Selected Report ID:", id); // Debugging
-    var myModal = new bootstrap.Modal(document.getElementById('asign'));
-    myModal.show();
+    
+    // Show the file management modal
+    var fileModal = new bootstrap.Modal(document.getElementById('asign'));
+    fileModal.show();
+}
+
+function viewFiles(id) {
+    // Fetch files from the server based on the report id
+    fetch(`fetchFiles.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            const filesContainer = document.getElementById('filesContainer');
+            filesContainer.innerHTML = '';
+
+            data.files.forEach(file => {
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'file-item';
+
+                const fileName = document.createElement('span');
+                fileName.textContent = file.name;
+
+                const fileLink = document.createElement('a');
+                fileLink.href = file.url;
+                fileLink.target = '_blank';
+                fileLink.textContent = 'View';
+                fileLink.className = 'btn btn-info btn-sm ms-2';
+
+                fileDiv.appendChild(fileName);
+                fileDiv.appendChild(fileLink);
+
+                filesContainer.appendChild(fileDiv);
+            });
+
+            var viewModal = new bootstrap.Modal(document.getElementById('viewFilesModal'));
+            viewModal.show();
+        })
+        .catch(error => console.error('Error fetching files:', error));
 }
 
 </script>

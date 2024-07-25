@@ -13,7 +13,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dorm Scout</title>
+  <title>Guardian Watch</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -171,7 +171,7 @@ INNER JOIN
 ON 
     r.user_id = u.id
 WHERE
-    r.finish !='Reject' and r.finish !='On'";
+    r.finish !='Reject' and r.finish !='Requirements' and r.finish !='Ongoing' and r.finish != 'Unsettled'";
                       $result = mysqli_query($conn, $sql);
                       while ($row = mysqli_fetch_array($result)) {
                         echo "<tr>";
