@@ -12,10 +12,10 @@
 Nasugbu Municipal Police Station (MPS) serves as the primary law enforcement agency for the area, responsible for maintaining peace and order, preventing crime, and ensuring the safety of residents. The Nasugbu MPS currently employs a system that mainly stores data about victims and suspects, which only the admin can access. However, the police officers want to speed up how they handle crime reports and make the system accessible to everyone in the area.
 
 ## Statement of the Problem
-1. What are common problems and constraints that the current system faces with regards to crime reporting and document management?
-2. What features and functionalities will the proposed system offer to improve crime reporting and document management?
-3. What is the level of satisfaction of the respondents on the proposed system?
-4. What is the level of acceptance of the proposed system as evaluated by IT Experts?
+- What are common problems and constraints that the current system faces with regards to crime reporting and document management?
+- What features and functionalities will the proposed system offer to improve crime reporting and document management?
+- What is the level of satisfaction of the respondents on the proposed system?
+- What is the level of acceptance of the proposed system as evaluated by IT Experts?
 
 ## Expected Outcomes
 1. Enhanced Real-time and Accurate Location Reporting for Incidents
